@@ -39,43 +39,58 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cambiarOperador(b: View) {
-        calcular()
-        val boton: Button = b as Button
-        if (boton.text.toString().trim() == "÷") {
-            operacionActual = "/"
-        } else if (boton.text.toString().trim() == "X") {
-            operacionActual = "*"
-        } else {
-            operacionActual = boton.text.toString().trim()
+        if (tv_temp.text.isNotEmpty()  || primerNumero.toString()!="NaN") {
+            calcular()
+            val boton: Button = b as Button
+            if (boton.text.toString().trim() == "÷") {
+                operacionActual = "/"
+            } else if (boton.text.toString().trim() == "X") {
+                operacionActual = "*"
+            } else {
+                operacionActual = boton.text.toString().trim()
+            }
+            if (tv_temp.text.toString().isEmpty()) {
+                tv_temp.text = tv_result.text
+            }
+            tv_result.text = formatoDecimal.format(primerNumero) + operacionActual
+            tv_temp.text = ""
         }
-        tv_result.text = formatoDecimal.format(primerNumero) + operacionActual
-        tv_temp.text = ""
     }
 
     fun calcular() {
-        if (primerNumero.toString() != "NaN") {
-            segundoNumero = tv_temp.text.toString().toDouble()
-            tv_temp.text = ""
+        try{
+            if (primerNumero.toString() != "NaN") {
+                if (tv_temp.text.toString().isEmpty()){
+                    tv_temp.text = tv_result.text.toString()
+                }
+                segundoNumero = tv_temp.text.toString().toDouble()
+                tv_temp.text = ""
 
-            when (operacionActual) {
-                "+" -> primerNumero = (primerNumero + segundoNumero)
-                "-" -> primerNumero = (primerNumero - segundoNumero)
-                "÷" -> primerNumero = (primerNumero / segundoNumero)
-                "x" -> primerNumero = (primerNumero * segundoNumero)
-                "%" -> primerNumero = (primerNumero % segundoNumero)
-            }
-        } else {
-            primerNumero = tv_temp.text.toString().toDouble()
+                when (operacionActual) {
+                    "+" -> primerNumero = (primerNumero + segundoNumero)
+                    "-" -> primerNumero = (primerNumero - segundoNumero)
+                    "÷" -> primerNumero = (primerNumero / segundoNumero)
+                    "x" -> primerNumero = (primerNumero * segundoNumero)
+                    "%" -> primerNumero = (primerNumero % segundoNumero)
+                }
+            } else {
+                primerNumero = tv_temp.text.toString().toDouble()
+        }
+    }catch (e: Exception){
+
         }
     }
 
     fun selecNumero(b: View) {
         val boton: Button = b as Button
-        if (tv_temp.text.toString() == "0") {
-            tv_temp.text = ""
-        }
         tv_temp.text = tv_temp.text.toString() + boton.text.toString()
 
+    }
+    fun igual(b: View) {
+        calcular()
+        tv_result.text = formatoDecimal.format(primerNumero)
+        //primerNumero = Double.NaN
+        operacionActual = ""
     }
 
     fun borrar(b: View) {
@@ -83,23 +98,22 @@ class MainActivity : AppCompatActivity() {
         if (boton.text.toString().trim() == "C") {
             if (tv_temp.text.toString().isNotEmpty()) {
                 var dataActual: CharSequence = tv_temp.text as CharSequence
-                tv_temp.text = dataActual.subSequence(0,dataActual.length-1)
-            }else{
-                primerNumero=Double.NaN
-                segundoNumero=Double.NaN
-                tv_temp.text=""
-                tv_result.text=""
+                tv_temp.text = dataActual.subSequence(0, dataActual.length - 1)
+            } else {
+                primerNumero = Double.NaN
+                segundoNumero = Double.NaN
+                tv_temp.text = ""
+                tv_result.text = ""
             }
 
 
         } else if (boton.text.toString().trim() == "CA") {
-            primerNumero=Double.NaN
-            segundoNumero=Double.NaN
-            tv_temp.text=""
-            tv_result.text=""
+            primerNumero = Double.NaN
+            segundoNumero = Double.NaN
+            tv_temp.text = ""
+            tv_result.text = ""
         }
-        tv_result.text = formatoDecimal.format(primerNumero) + operacionActual
-        tv_temp.text = ""
+
     }
 }
 
