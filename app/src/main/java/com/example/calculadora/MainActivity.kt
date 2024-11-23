@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         formatoDecimal = DecimalFormat("#.###########")
         tv_temp = findViewById(R.id.tv_temp)
-        tv_temp = findViewById(R.id.tv_result)
+        tv_result = findViewById(R.id.tv_result)
 
     }
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 operacionActual = "/"
             } else if (boton.text.toString().trim() == "X") {
                 operacionActual = "*"
-            } else {
+            }  else {
                 operacionActual = boton.text.toString().trim()
             }
             if (tv_temp.text.toString().isEmpty()) {
@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
                 when (operacionActual) {
                     "+" -> primerNumero = (primerNumero + segundoNumero)
                     "-" -> primerNumero = (primerNumero - segundoNumero)
-                    "÷" -> primerNumero = (primerNumero / segundoNumero)
-                    "x" -> primerNumero = (primerNumero * segundoNumero)
+                    "/" -> primerNumero = (primerNumero / segundoNumero)
+                    "*" -> primerNumero = (primerNumero * segundoNumero)
                     "%" -> primerNumero = (primerNumero % segundoNumero)
                 }
             } else {
