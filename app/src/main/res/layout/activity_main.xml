@@ -28,7 +28,18 @@
         android:textColor="@color/black"
         android:textSize="60dp" />
 
+    <TextView
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:text="Calculadora"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:background="@color/purple_50"
+        android:textSize="20sp"
+        />
+
     <include
+        android:id="@+id/text"
         layout="@layout/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
